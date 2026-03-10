@@ -1,0 +1,9 @@
+[
+  {
+    "targets": [ "test-mon:9100", "test-mgmt:9100", "test-ca:9100", "test-vpn:9100" ],
+    "labels": {
+      "job": "node",
+      "env": "production"
+    }
+  }
+]

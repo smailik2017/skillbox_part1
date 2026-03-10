@@ -1,0 +1,54 @@
+#!/bin/bash
+
+# check hosts exists
+if ! host test-mgmt &> /dev/null
+then
+  echo "ERROR: test-mgmt server does not exists? check cloud!"
+  exit 1
+fi
+
+if ! host test-vpn &> /dev/null
+then
+  echo "ERROR: test-vpn server does not exists? check cloud!"
+  exit 1
+fi
+
+if ! host test-ca &> /dev/null
+then
+  echo "ERROR: test-ca server does not exists? check cloud!"
+  exit 1
+fi
+
+if ! host test-mon &> /dev/null
+then
+  echo "ERROR: test-mon server does not exists? check cloud!"
+  exit 1
+fi
+
+# create system user openvpn_exporter
+if ! id openvpn_exporter &> /dev/null 
+then
+  adduser --system --no-create-home --group openvpn_exporter
+fi
+
+sudo usermod -a -G openvpn_exporter root
+sudo usermod -a -G openvpn_exporter openvpn
+
+# set owner and permissions
+if [ ! -f /var/log/openvpn/openvpn-status.log ]
+then 
+  touch /var/log/openvpn/openvpn-status.log
+fi
+
+chown openvpn_exporter:openvpn_exporter /var/log/openvpn/openvpn-status.log
+chmod 660 /var/log/openvpn/openvpn-status.log
+
+chown openvpn_exporter:openvpn_exporter /usr/bin/openvpn_exporter
+chmod 755 /usr/bin/openvpn_exporter
+
+# start service
+sudo systemctl daemon-reload
+sudo systemctl enable openvpn_exporter.service
+sudo systemctl start openvpn_exporter.service
+
+exit 0

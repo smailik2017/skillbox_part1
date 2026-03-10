@@ -1,0 +1,29 @@
+groups:
+- name: openvpn_alerts
+  rules:
+  - alert: OpenVPNServerDown
+    expr: openvpn_up == 0
+    for: 1m
+    labels:
+      severity: critical
+    annotations:
+      summary: "OpenVPN server {{ $labels.instance }} is down"
+      description: "The OpenVPN server at {{ $labels.instance }} has not been reachable for more than 1 minute. The exporter is likely down or the server status file is not being updated."
+
+  - alert: TooManyClientsConnected
+    expr: openvpn_server_connected_clients > 100
+    for: 2m
+    labels:
+      severity: warning
+    annotations:
+      summary: "Too many OpenVPN clients connected to {{ $labels.instance }}"
+      description: "The number of connected clients to OpenVPN server {{ $labels.instance }} has exceeded the threshold of 100 for more than 2 minutes."
+
+  - alert: HighDataTransfer
+    expr: (openvpn_server_client_received_bytes_total offset 1h) > 1e+10 OR (openvpn_server_client_sent_bytes_total offset 1h) > 1e+10 # 10 GB in one hour
+    for: 5m
+    labels:
+      severity: info
+    annotations:
+      summary: "High data transfer for a client on {{ $labels.instance }}"
+      description: "User {{ $labels.common_name }} is transferring a large amount of data (over 10GB/hour) on {{ $labels.instance }}."

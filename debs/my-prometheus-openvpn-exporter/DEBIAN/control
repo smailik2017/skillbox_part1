@@ -1,0 +1,8 @@
+Package: my-prometheus-openvpn-exporter
+Version: 1.0
+Section: custom
+Priority: optional
+Architecture: all
+Maintainer: smailik <smailik@example.com>
+Depends: golang
+Description: prometheus-openvpn-exporter-package

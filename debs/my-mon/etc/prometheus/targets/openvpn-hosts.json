@@ -1,0 +1,9 @@
+[
+  {
+    "targets": [ "localhost:9176" ],
+    "labels": {
+      "job": "openvpn",
+      "env": "production"
+    }
+  }
+]

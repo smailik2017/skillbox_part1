@@ -1,0 +1,9 @@
+Package: my-ca 
+Version: 1.0
+Section: custom
+Priority: optional
+Architecture: all
+Maintainer: smailik <smailik@example.com>
+Description: Scripts to automate work with CA server
+Replaces: prometheus-node-exporter
+Depends: easy-rsa, prometheus-node-exporter

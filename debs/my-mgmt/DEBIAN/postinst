@@ -1,0 +1,68 @@
+#!/bin/bash
+
+# check hosts exists
+if ! host test-mgmt &> /dev/null
+then
+  echo "ERROR: test-mgmt server does not exists? check cloud!"
+  exit 1
+fi
+
+if ! host test-vpn &> /dev/null
+then
+  echo "ERROR: test-vpn server does not exists? check cloud!"
+  exit 1
+fi
+
+if ! host test-ca &> /dev/null
+then
+  echo "ERROR: test-ca server does not exists? check cloud!"
+  exit 1
+fi
+
+if ! host test-mon &> /dev/null
+then
+  echo "ERROR: test-mon server does not exists? check cloud!"
+  exit 1
+fi
+
+# set permissions on scripts
+chown -R smailik:smailik /opt/my-scripts
+chmod -R 700 /opt/my-scripts
+
+# set permissions in cron
+chown -R root:root /etc/cron.d
+
+# for prometheus-node-exporter
+chown -R prometheus:prometheus /etc/prometheus-exporter
+
+# get ip address of test-mon
+if ! host test-mon &> /dev/null
+then
+  echo "ERROR: test-mon server does not exists? check cloud!"
+  exit 1
+fi
+vm_mon=$(host test-mon | awk '{print $NF"/32"}')
+
+# clear iptables rules
+sudo iptables -F
+
+# set base iptables rules
+sudo iptables -P INPUT DROP
+
+sudo iptables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+sudo iptables -A OUTPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+sudo iptables -A INPUT -i lo -j ACCEPT
+
+# allow ssh from any net
+sudo iptables -A INPUT -p tcp --dport 22 -j ACCEPT
+
+# allow icmp
+sudo iptables -A INPUT -p icmp --icmp-type echo-request -j ACCEPT
+
+# allow prometheus (9100/tcp) from mon
+sudo iptables -A INPUT -p tcp -s $vm_mon --dport 9100 -j ACCEPT
+
+# save rules
+sudo netfilter-persistent save
+
+exit 0

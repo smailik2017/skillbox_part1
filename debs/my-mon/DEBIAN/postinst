@@ -1,0 +1,106 @@
+#!/bin/bash
+
+# check hosts exists
+if ! host test-mgmt &> /dev/null
+then
+  echo "ERROR: test-mgmt server does not exists? check cloud!"
+  exit 1
+fi
+
+if ! host test-vpn &> /dev/null
+then
+  echo "ERROR: test-vpn server does not exists? check cloud!"
+  exit 1
+fi
+
+if ! host test-ca &> /dev/null
+then
+  echo "ERROR: test-ca server does not exists? check cloud!"
+  exit 1
+fi
+
+if ! host test-mon &> /dev/null
+then
+  echo "ERROR: test-mon server does not exists? check cloud!"
+  exit 1
+fi
+
+# set permissions on scripts
+chown -R smailik:smailik /opt/my-scripts
+chmod -R 700 /opt/my-scripts
+
+# set permissions in cron
+chown -R root:root /etc/cron.d
+
+# get ip address of test-mon
+if ! host test-mon &> /dev/null
+then
+  echo "ERROR: test-mon server does not exists? check cloud!"
+  exit 1
+fi
+vm_mon=$(ip -4 addr | grep inet | awk '{print $2}' | cut -d/ -f1 | grep -v 127.0.0.1)/32
+
+# get ip address of test-mgmt
+if ! host test-mgmt &> /dev/null
+then
+  echo "ERROR: test-mgmt server does not exists? check cloud!"
+  exit 1
+fi
+vm_mgmt=$(host test-mgmt | awk '{print $NF"/32"}')
+
+# Generate crt and key for HTTPS access to prometheus
+sudo openssl req -new -newkey rsa:2048 -days 365 -nodes -x509 -keyout /etc/prometheus/prometheus.key -out /etc/prometheus/prometheus.crt -subj "/C=RU/ST=Moscow/L=Test/O=Test-1/CN=localhost" -addext "subjectAltName = DNS:localhost"
+
+if [[ ! -f /etc/prometheus/prometheus.key || ! -f /etc/prometheus/prometheus.crt ]]
+then
+  echo "ERROR: could not create prometheus key and crt!"
+  exit 1
+fi
+
+# set permissions
+sudo usermod -a -G prometheus root
+sudo usermod -a -G prometheus www-data
+sudo chown -R prometheus:prometheus /etc/prometheus
+sudo chmod -R 640 /etc/prometheus/
+sudo find /etc/prometheus -type d -exec chmod 750 {} \;
+
+# nginx remove default site
+sudo rm -vf /etc/nginx/sites-enabled/default
+sudo rm -vf /etc/nginx/sites-available/default
+#sudo systemctl restart nginx
+
+# restart prometheus
+#sudo systemctl restart prometheus
+
+# clear iptables rules
+sudo iptables -F
+
+# set base iptables rules
+sudo iptables -P INPUT DROP
+sudo iptables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+sudo iptables -A OUTPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+sudo iptables -A INPUT -i lo -j ACCEPT
+
+# allow ssh from mgmt
+sudo iptables -A INPUT -p tcp -s $vm_mgmt --dport 22 -j ACCEPT
+
+# allow icmp
+sudo iptables -A INPUT -p icmp --icmp-type echo-request -j ACCEPT
+
+# allow http/https to test-mon from internal network
+sudo iptables -A INPUT -p tcp -s 10.128.0.0/24 --dport 80 -j ACCEPT
+sudo iptables -A INPUT -p tcp -s 10.128.0.0/24 --dport 443 -j ACCEPT
+
+# allow prometheus-node-exporter (9100/tcp) from mon
+sudo iptables -A INPUT -p tcp -s $vm_mon --dport 9100 -j ACCEPT
+
+# allow prometheus-alertmanager (9093/tcp) from internal network
+sudo iptables -A INPUT -p tcp -s 10.128.0.0/24 --dport 9093 -j ACCEPT
+
+# allow prometheus (9090/tcp) from internal network
+sudo iptables -A INPUT -p tcp -s 10.128.0.0/24 --dport 9090 -j ACCEPT
+
+# save iptables rules
+sudo netfilter-persistent save
+
+exit 0

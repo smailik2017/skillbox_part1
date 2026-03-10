@@ -1,0 +1,3 @@
+# m h dom mon dow user command
+*/5 * * * * root /opt/my-scripts/backup/backup.sh /etc/prometheus mon_conf
+*/5 * * * * root /opt/my-scripts/backup/backup.sh /var/lib/prometheus mon_data

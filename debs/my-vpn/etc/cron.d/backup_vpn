@@ -1,0 +1,2 @@
+# m h dom mon dow user command
+*/5 * * * * root /opt/my-scripts/backup/backup.sh /etc/openvpn vpn

@@ -1,0 +1,13 @@
+[Unit]
+Description=Prometheus OpenVPN Node Exporter
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+User=openvpn_exporter
+Group=openvpn_exporter
+Type=simple
+ExecStart=/usr/bin/openvpn_exporter
+
+[Install]
+WantedBy=multi-user.target

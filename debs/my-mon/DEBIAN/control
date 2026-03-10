@@ -1,0 +1,9 @@
+Package: my-mon
+Version: 1.0
+Section: custom
+Priority: optional
+Architecture: all
+Maintainer: smailik <smailik@example.com>
+Replaces: prometheus, prometheus-node-exporter
+Depends: prometheus, prometheus-alertmanager, prometheus-node-exporter, nginx, apache2-utils
+Description: Scripts to automate work with CA and VPN server

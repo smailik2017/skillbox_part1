@@ -1,0 +1,20 @@
+#cloud-config
+
+# Обновление системы
+package_update: true
+package_upgrade: true
+
+# Установка пакетов
+packages:
+  - iptables-persistent
+
+# Настройка часового пояса
+timezone: Europe/Moscow
+
+# пользователь
+users:
+  - name: smailik
+    sudo: 'ALL=(ALL) NOPASSWD:ALL'
+    shell: /bin/bash
+    ssh_authorized_keys:
+      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCTNMBGWVFoY42HAFHqKaqMm5/rS9Y0+rGkVfJpuMDkZnTJuPrwjzarFqiMCYkMGMB5+cGZ03WxlVYIu0F2iFKYuxkcespXX8qMJf0IbjSmNfxJFhORgVn3L3peraslDuQzb2Y+FLQ8Nj7PEA9N9pz8mM+rA2bOlbrxLTI2q+l4rMRH5VM8QGBxuNlsAsT6kWqkGSMN6UYEHlrffCy2O2m7higQ49NYmZNp8Gr4FAfwDkQDFn/xLopu6VntmtP6iPjVROwJdlKEg8mWAM1O6b0BLfMRkI+b0hyKtSCwQbJcirhRsyEHSakryXsh9S2UXol4BzW0MBqX+cVoxbzFBYzF Timeweb Machine

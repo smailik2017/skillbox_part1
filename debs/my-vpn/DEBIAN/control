@@ -1,0 +1,9 @@
+Package: my-vpn 
+Version: 1.0
+Section: custom
+Priority: optional
+Architecture: all
+Maintainer: smailik <smailik@example.com>
+Replaces: prometheus-node-exporter
+Depends: openvpn, golang, prometheus-node-exporter
+Description: Scripts to automate work with VPN server

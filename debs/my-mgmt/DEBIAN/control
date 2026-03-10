@@ -1,0 +1,9 @@
+Package: my-mgmt
+Version: 1.0
+Section: custom
+Priority: optional
+Architecture: all
+Maintainer: smailik <smailik@example.com>
+Replaces: prometheus-node-exporter
+Depends: prometheus-node-exporter
+Description: Scripts to automate work with CA and VPN server

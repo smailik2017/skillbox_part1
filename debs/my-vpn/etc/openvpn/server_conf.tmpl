@@ -1,0 +1,21 @@
+port 1194
+proto udp
+dev tun
+ca ca.crt
+cert server.crt
+key server.key
+dh dh.pem
+crl-verify crl.pem
+auth SHA256
+server 10.8.0.0 255.255.255.0
+ifconfig-pool-persist ipp.txt
+push "route SUBNET 255.255.255.0"
+keepalive 10 120
+cipher AES-256-GCM
+user openvpn
+group openvpn
+persist-key
+persist-tun
+status /var/log/openvpn/openvpn-status.log
+status-version 2
+verb 3

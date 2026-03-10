@@ -1,0 +1,73 @@
+#cloud-config
+
+# Обновление системы
+package_update: true
+package_upgrade: true
+
+# Установка пакетов
+packages:
+  - iptables-persistent
+  
+# Настройка часового пояса
+timezone: Europe/Moscow
+
+# пользователь
+users:
+  - name: smailik
+    sudo: 'ALL=(ALL) NOPASSWD:ALL'
+    shell: /bin/bash
+    ssh_authorized_keys:
+      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCTNMBGWVFoY42HAFHqKaqMm5/rS9Y0+rGkVfJpuMDkZnTJuPrwjzarFqiMCYkMGMB5+cGZ03WxlVYIu0F2iFKYuxkcespXX8qMJf0IbjSmNfxJFhORgVn3L3peraslDuQzb2Y+FLQ8Nj7PEA9N9pz8mM+rA2bOlbrxLTI2q+l4rMRH5VM8QGBxuNlsAsT6kWqkGSMN6UYEHlrffCy2O2m7higQ49NYmZNp8Gr4FAfwDkQDFn/xLopu6VntmtP6iPjVROwJdlKEg8mWAM1O6b0BLfMRkI+b0hyKtSCwQbJcirhRsyEHSakryXsh9S2UXol4BzW0MBqX+cVoxbzFBYzF Timeweb Machine
+
+write_files:
+  - path: /tmp/smailik/timeweb
+    content: |
+      -----BEGIN OPENSSH PRIVATE KEY-----
+      b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAABFwAAAAdzc2gtcn
+      NhAAAAAwEAAQAAAQEAkzTARllRaGONhwBR6imqjJuf60vWNPqxpFXyabjA5GZ0ybj68I82
+      qxaojAmJDBjAefnBmdN1sZVWCLtBdohSmLsZHHrKV1/KjCX9CG40pjX8SRYTkYFZ9y96Xq
+      2rJQ7kM29mPhS0PDY+zxAPTfac/JjPqwNmzpW68S0yNqvpeKzER+VTPEBgcbjZbALE+pFq
+      pBkjDelGBB5a33wstjtpu4YoEOPTWJmTafBq+BQH8A5EAxZ/8S6KbulZ7ZrT+oj41UTsCX
+      ZShIPJlgDNTum9AS3zEZCPm9IcirUgsEGyXIq4UbMhB0mpK8l7IfUtlF6JeAc1tDAal/nF
+      aMW8xQWMxQAAA8gmoBjBJqAYwQAAAAdzc2gtcnNhAAABAQCTNMBGWVFoY42HAFHqKaqMm5
+      /rS9Y0+rGkVfJpuMDkZnTJuPrwjzarFqiMCYkMGMB5+cGZ03WxlVYIu0F2iFKYuxkcespX
+      X8qMJf0IbjSmNfxJFhORgVn3L3peraslDuQzb2Y+FLQ8Nj7PEA9N9pz8mM+rA2bOlbrxLT
+      I2q+l4rMRH5VM8QGBxuNlsAsT6kWqkGSMN6UYEHlrffCy2O2m7higQ49NYmZNp8Gr4FAfw
+      DkQDFn/xLopu6VntmtP6iPjVROwJdlKEg8mWAM1O6b0BLfMRkI+b0hyKtSCwQbJcirhRsy
+      EHSakryXsh9S2UXol4BzW0MBqX+cVoxbzFBYzFAAAAAwEAAQAAAQARKNOG/89pCz3KsGNc
+      F/pNBLEaFQ+Fwnllri0hXMuDdFwFzb3Wv+MAA5anKE9k7Re2wEHspAUyq7VJNEbXweFa82
+      hkdP3UPJLYTm9WBb62Z1Ge1Wd3jSwHD+5EThtGqRs50bEJ6JDv+eTNb1JRZL99BHUkurNH
+      vpV5mqqhS93d1pyNnDxMawTvO9eYW3XPxnhGf7XKNuUnBhC+QMEHBFmX+r0/H7JalE5clM
+      8RNEJN+h1NQqEkeSqGBTyP8mUSB4TjQwyKvNgPXi9/kWZSY6LkZ980TebvT4XM765q61MV
+      gYk4JvjBwsvQ3oe5t9nnhX+JHwp4jFgOegET3cfhAxRRAAAAgCfp51ihDU6bQzhjkAZmzZ
+      D3SEVC8ROvxR+XWpagD2o9iivP3fEhqQ7TLwgjP5RawUvvkkFlB82Tkz8V0FnDKqe2zKl1
+      KGnY4/aPG1Jj4cP1BeB0Hk7vEAL5QHbljAoAdGszrovwHcnn2ZJlSvtXmq+03VnoaDGh1k
+      GmaK4L5UT5AAAAgQDH719xB6zFxM2GFjuveRKOB06MPfiU/BsRTS7CpPrZQxJ/MYETXQDq
+      JH5HkLAXtHI+lV5Jg8xpvT4yMo9n7S/aZvRUVarUPgxNdr/hBeUUXJkCdi80QDB+X9Mq88
+      lXGgFGbMGLnn6SA9ITnGWNZzr0gbasLcDYRYTiY9zQKuGyKQAAAIEAvHwmt9fxtJH8Ecyr
+      Yd4KdoImv7Jx9gOzEnhmM844LuDTDiC3KZjjGxM9+ZU4oFqPBtcYHyJk7QgzFf9oE6e51O
+      aEeQOnNWrVawG3yWzTONXQ4rpXC2VVerLRF62zavcNLp3YgSDC/sWi59cSWCJNP+0p7jhH
+      VA4PgBXJczgKcT0AAAAPVGltZXdlYiBNYWNoaW5lAQIDBA==
+      -----END OPENSSH PRIVATE KEY-----
+    permissions: '0600'
+  - path: /tmp/smailik/config
+    content: |
+      Host *
+      IdentityFile ~/.ssh/timeweb
+    permissions: '0600'
+  - path: /tmp/smailik/startup.sh
+    content: |
+      #!/usr/bin/bash
+      mkdir -p /home/smailik/.ssh
+      
+      mv /tmp/smailik/config /home/smailik/.ssh/
+      mv /tmp/smailik/timeweb /home/smailik/.ssh/
+
+      chown smailik:smailik /home/smailik/.ssh/timeweb
+      chown smailik:smailik /home/smailik/.ssh/config
+
+      rm -rf /tmp/smailik
+    permissions: '0755'
+
+runcmd:
+  - /tmp/smailik/startup.sh

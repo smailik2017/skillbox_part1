@@ -1,0 +1,11 @@
+server {
+	listen 9176 ssl;
+
+	server_name localhost;
+    	ssl_certificate /etc/prometheus-exporter/clients.crt;
+    	ssl_certificate_key /etc/prometheus-exporter/clients.key;
+
+	location / {
+		proxy_pass http://test-vpn:9176;
+	}
+}
