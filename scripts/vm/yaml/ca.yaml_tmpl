@@ -1,0 +1,20 @@
+#cloud-config
+
+# Обновление системы
+package_update: true
+package_upgrade: true
+
+# Установка пакетов
+packages:
+  - iptables-persistent
+
+# Настройка часового пояса
+timezone: Europe/Moscow
+
+# пользователь
+users:
+  - name: smailik
+    sudo: 'ALL=(ALL) NOPASSWD:ALL'
+    shell: /bin/bash
+    ssh_authorized_keys:
+      - <public>

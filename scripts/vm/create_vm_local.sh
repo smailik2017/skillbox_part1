@@ -5,8 +5,9 @@
 #
 # --vm-name <virtual machine name> - имя виртуальной машины
 # --vm-yaml-file <file.yaml> - конфигурация виртуальной машины
+# --vm-public-key <file.pub> - public key
 #
-# EXAMPLE: ./create_vm.sh --vm-name test-vm --vm-yaml-file yaml/ca.yaml
+# EXAMPLE: ./create_vm.sh --vm-name test-vm --vm-yaml-file yaml/ca.yaml --vm-public-key ~/.ssh/timeweb.pub
 #
 ##
 
@@ -14,7 +15,8 @@
 function show_help {
   echo "--vm-name <virtual machine name> - имя виртуальной машины"
   echo "--vm-yaml-file <yaml file here> - имя файл с конфигом VM в формате YAML"
-  echo "EXAMPLE: ./create_vm.sh --vm-name test-vm --vm-yaml-file ./ca.yaml"
+  echo "--vm-public-key <file.pub> - public key for ssh access"
+  echo "EXAMPLE: ./create_vm.sh --vm-name test-vm --vm-yaml-file ./ca.yaml --vm-public-key ~/.ssh/timeweb.pub"
   echo "VMs in cloud:"
   yc compute instance list
 }
@@ -31,6 +33,11 @@ do
     "--vm-yaml-file")
       shift
       VM_YAML=$1
+      shift
+      ;;
+    "--vm-public-key")
+      shift
+      VM_PUBLIC_KEY=$1
       shift
       ;;
     "--help")
@@ -60,6 +67,16 @@ then
   exit 1
 fi
 
+# Не указан public key
+if [ -z $VM_PUBLIC_KEY ] 
+then
+  echo "VM_PUBLIC_KEY not set !!!"
+  show_help
+  exit 1
+fi
+
+sed "s@<public>@$(cat $VM_PUBLIC_KEY)@g" "$VM_YAML" > ${VM_YAML%?????}
+
 # creating VM
 echo "creating VM: $VM_NAME"
 yc compute instance create \
@@ -67,4 +84,6 @@ yc compute instance create \
   --hostname="$VM_NAME" \
   --zone=ru-central1-a \
   --create-boot-disk image-folder-id=standard-images,image-family=ubuntu-2404-lts,size=10G \
-  --metadata-from-file user-data=$VM_YAML
+  --metadata-from-file user-data=${VM_YAML%?????}
+
+rm ${VM_YAML%?????}
