@@ -69,12 +69,12 @@ fi
 # Не указан public key
 if [ -z $VM_PUBLIC_KEY ] 
 then
-  echo "VM_PUBLIC_KEY not set !!!"
+  echo "VM_PUBLIC_KEY not set or not exists!!!"
   show_help
   exit 1
 fi
 
-sed "s@<public>@$(cat $VM_PUBLIC_KEY)@g" "$VM_YAML" > ${VM_YAML%?????}
+sed "s|<public>|$(cat "$VM_PUBLIC_KEY")|g" "$VM_YAML" > ${VM_YAML%?????}
 
 # creating VM
 echo "creating VM: $VM_NAME"
