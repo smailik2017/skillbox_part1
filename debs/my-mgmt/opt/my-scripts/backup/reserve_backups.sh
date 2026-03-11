@@ -9,7 +9,7 @@
 SRC_DIR=/opt/backups/
 RESERVE_DIR=~/reserve_backups
 
-ssh-keysddcan test-mgmt >> ~/.ssh/known_hosts
+ssh-keyscan test-mgmt >> ~/.ssh/known_hosts
 ssh-keyscan test-mon >> ~/.ssh/known_hosts
 ssh-keyscan test-vpn >> ~/.ssh/known_hosts
 ssh-keyscan test-ca >> ~/.ssh/known_hosts
