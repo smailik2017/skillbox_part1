@@ -5,5 +5,5 @@ Priority: optional
 Architecture: all
 Maintainer: smailik <smailik@example.com>
 Replaces: prometheus-node-exporter
-Depends: openvpn, golang, prometheus-node-exporter
+Depends: openvpn, golang, prometheus-node-exporter, nginx
 Description: Scripts to automate work with VPN server

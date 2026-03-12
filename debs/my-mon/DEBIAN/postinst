@@ -88,14 +88,13 @@ sudo iptables -A INPUT -p tcp -s $vm_mgmt --dport 22 -j ACCEPT
 sudo iptables -A INPUT -p icmp --icmp-type echo-request -j ACCEPT
 
 # allow http/https to test-mon from internal network
-sudo iptables -A INPUT -p tcp -s 10.128.0.0/24 --dport 80 -j ACCEPT
 sudo iptables -A INPUT -p tcp -s 10.128.0.0/24 --dport 443 -j ACCEPT
 
 # allow prometheus-node-exporter (9100/tcp) from mon
 sudo iptables -A INPUT -p tcp -s $vm_mon --dport 9100 -j ACCEPT
 
-# allow prometheus-alertmanager (9093/tcp) from internal network
-sudo iptables -A INPUT -p tcp -s 10.128.0.0/24 --dport 9093 -j ACCEPT
+# allow prometheus-alertmanager (9993/tcp) from internal network
+sudo iptables -A INPUT -p tcp -s 10.128.0.0/24 --dport 9993 -j ACCEPT
 
 # allow prometheus (9090/tcp) from internal network
 sudo iptables -A INPUT -p tcp -s 10.128.0.0/24 --dport 9090 -j ACCEPT

@@ -75,8 +75,8 @@ sudo iptables -A INPUT -p icmp --icmp-type echo-request -j ACCEPT
 # allow prometheus (9100/tcp) mon
 sudo iptables -A INPUT -p tcp -s $vm_mon --dport 9100 -j ACCEPT
 
-# allow prometheus openvpn (9176/tcp) from mon
-sudo iptables -A INPUT -p tcp -s $vm_mon --dport 9176 -j ACCEPT
+# allow prometheus openvpn (9976/tcp) from mon
+sudo iptables -A INPUT -p tcp -s $vm_mon --dport 9976 -j ACCEPT
 
 # set NAT for VPN
 sudo iptables -t nat -A POSTROUTING -s 10.8.0.0/24 -o eth0 -j MASQUERADE

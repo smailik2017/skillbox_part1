@@ -1,0 +1,11 @@
+server {
+        listen 9993 ssl;
+
+        server_name test-mon;
+        ssl_certificate /etc/prometheus-exporter/clients.crt;
+        ssl_certificate_key /etc/prometheus-exporter/clients.key;
+
+        location / {
+                proxy_pass http://localhost:9093;
+        }
+}
