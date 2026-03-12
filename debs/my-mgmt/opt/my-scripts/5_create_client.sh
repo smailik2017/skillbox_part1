@@ -2,6 +2,7 @@
 ##
 #
 # Script creates client for openvpn server
+# $1 - name of client
 #
 ##
 
