@@ -21,6 +21,7 @@ echo "basic_auth_users:" | sudo tee -a /etc/prometheus/web.yml &> /dev/null
 echo "  $1: \"$pass\"" | sudo tee -a /etc/prometheus/web.yml &> /dev/null
 
 # add cpnfig to prometheus.yml
+sudo cp /etc/prometheus/prometheus.tmpl /etc/prometheus/prometheus.yml
 sudo sed -i "s/^.*username.*$/      username: '$1'/" /etc/prometheus/prometheus.yml
 sudo sed -i "s/^.*password.*$/      password: '$2'/" /etc/prometheus/prometheus.yml
 

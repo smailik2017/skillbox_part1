@@ -72,10 +72,10 @@ sudo iptables -A INPUT -p udp --dport 1194 -j ACCEPT
 # allow icmp
 sudo iptables -A INPUT -p icmp --icmp-type echo-request -j ACCEPT
 
-# allow prometheus (9100/tcp) mon
+# allow node-exporter (9100/tcp) from mon
 sudo iptables -A INPUT -p tcp -s $vm_mon --dport 9100 -j ACCEPT
 
-# allow prometheus openvpn (9976/tcp) from mon
+# allow prometheus openvpn-exporter (9976/tcp) from mon
 sudo iptables -A INPUT -p tcp -s $vm_mon --dport 9976 -j ACCEPT
 
 # set NAT for VPN
