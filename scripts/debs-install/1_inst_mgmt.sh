@@ -60,3 +60,5 @@ fi
 echo "OK: MGMT ready to work"
 
 cd -
+
+exit 0

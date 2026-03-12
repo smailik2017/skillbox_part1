@@ -50,6 +50,10 @@ chown -R openvpn:openvpn /var/log/openvpn
 # enable openvpn service
 systemctl enable openvpn@server
 
+# nginx remove default site
+sudo rm -vf /etc/nginx/sites-enabled/default
+sudo rm -vf /etc/nginx/sites-available/default
+
 # get ip address of test-mon and test-mgmt
 vm_mon=$(host test-mon | awk '{print $NF"/32"}')
 vm_mgmt=$(host test-mgmt | awk '{print $NF"/32"}')
