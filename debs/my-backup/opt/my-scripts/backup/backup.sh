@@ -41,11 +41,11 @@ BACKUPS_CNT=5
 mkdir -p "$BACKUP_DIR"
 
 FILES_CNT=$(find "$BACKUP_DIR" -type f -name "*$PREFIX*" | wc -l)
-BACKUP_FILE="$BACKUP_DIR/$PREFIX\_$(date +%Y-%m-%d__%H%M%S__%s).tar.gz"
+BACKUP_FILE="$BACKUP_DIR/${PREFIX}_$(date +%Y-%m-%d__%H%M%S__%s).tar.gz"
 
 if (( FILES_CNT == BACKUPS_CNT ))
 then
-  MIN=$(find $BACKUP_DIR -type f -name "*$PREFIX*" -exec basename {} .tar.gz \; | sed 's/_/ /g' | awk '{print $NF}' | sort -n | head -n 1)
+  MIN=$(find "$BACKUP_DIR" -type f -name "*$PREFIX*" -exec basename {} .tar.gz \; | sed 's/_/ /g' | awk '{print $NF}' | sort -n | head -n 1)
   rm -vf "$BACKUP_DIR/$PREFIX*$MIN*"
 fi
 
