@@ -1,0 +1,8 @@
+Package: my-backup
+Version: 1.0
+Section: custom
+Priority: optional
+Architecture: all
+Maintainer: smailik <smailik@example.com>
+Description: Scripts to automate backup
+

@@ -1,2 +1,2 @@
 # m h dom mon dow user command
-*/5 * * * * root /opt/my-scripts/backup/backup.sh /opt/my-scripts mgmt
+*/5 * * * * root /opt/my-scripts/backup/backup.sh /opt/my-scripts mgmt /opt/backups

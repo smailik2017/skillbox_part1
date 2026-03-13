@@ -1,6 +1,6 @@
 [
   {
-    "targets": [ "localhost:9176" ],
+    "targets": [ "test-vpn:9976" ],
     "labels": {
       "job": "openvpn",
       "env": "production"

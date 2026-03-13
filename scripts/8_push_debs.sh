@@ -12,35 +12,42 @@ cd "$(dirname "$0")"/debs-install/ || exit 1
 
 if ! ./1_inst_mgmt.sh
 then
-  echo "Error executing 1_inst_mgmt.sh, check logs!"
+  echo "ERROR: Error executing 1_inst_mgmt.sh, check logs!"
   echo "Exiting ..."
   exit 1
 fi
 
 if ! ./2_inst_ca.sh
 then
-  echo "Error executing 1_inst_ca.sh, check logs!"
+  echo "ERROR: Error executing 1_inst_ca.sh, check logs!"
   echo "Exiting ..."
   exit 1
 fi
 
 if ! ./3_inst_vpn.sh
 then
-  echo "Error executing 1_inst_vpn.sh, check logs!"
+  echo "ERROR: Error executing 1_inst_vpn.sh, check logs!"
   echo "Exiting ..."
   exit 1
 fi
 
 if ! ./4_inst_vpn_mon.sh
 then
-  echo "Error executing 1_inst_vpn_mon.sh, check logs!"
+  echo "ERROR: Error executing 1_inst_vpn_mon.sh, check logs!"
   echo "Exiting ..."
   exit 1
 fi
 
 if ! ./5_inst_mon.sh
 then
-  echo "Error executing 1_inst_mon.sh, check logs!"
+  echo "ERROR: Error executing 1_inst_mon.sh, check logs!"
+  echo "Exiting ..."
+  exit 1
+fi
+
+if ! ./6_inst_backup.sh
+then
+  echo "ERROR: Error executing 1_inst_mon.sh, check logs!"
   echo "Exiting ..."
   exit 1
 fi

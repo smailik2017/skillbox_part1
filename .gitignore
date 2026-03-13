@@ -1,0 +1,2 @@
+# ignoring yaml files for VM
+scripts/vm/yaml/*.yaml

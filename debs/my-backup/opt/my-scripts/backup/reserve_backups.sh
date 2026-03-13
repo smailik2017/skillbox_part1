@@ -3,13 +3,13 @@
 #
 # sync backup to mgmt server
 # script sync backup dirs on remote servers to home
-# and removes backups older 30 days (LIMIT variable)
+# and removes backups older LIMIT days
 #
 ##
 
 SRC_DIR=/opt/backups/
 RESERVE_DIR=~/reserve_backups
-# remove files older 30 days
+# set limit in 30 days, backup files older, will be removed
 LIMIT=$(echo "30 * 24 * 60 * 60" | bc)
 
 {

@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# set permissions on backup scripts
+chown -R smailik:smailik /opt/my-scripts/backup
+chmod -R 700 /opt/my-scripts/backup
+
+exit 0

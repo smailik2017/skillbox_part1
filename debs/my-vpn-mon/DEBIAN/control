@@ -1,4 +1,4 @@
-Package: my-prometheus-openvpn-exporter
+Package: my-vpn-mon
 Version: 1.0
 Section: custom
 Priority: optional
