@@ -4,10 +4,9 @@
 # Script install MGMT server
 #
 ##
-
 rm ~/.ssh/known_hosts
 
-cd "$(dirname "$0")"/../../debs/
+cd "$(dirname "$0")"/../../debs/ || exit 1
 
 mgmt="test-mgmt-ext"
 
@@ -59,6 +58,6 @@ fi
 
 echo "OK: MGMT ready to work"
 
-cd -
+cd - || exit 1
 
 exit 0

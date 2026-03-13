@@ -1,4 +1,5 @@
 #!/bin/bash
+# shellcheck disable=SC2029
 ##
 #
 # script regenerate CA and all clients to home
@@ -18,6 +19,8 @@ rm -rf ~/vpn-clients
 ssh test-ca "sudo $SCRIPTS/6_regen_clients.sh"
 
 # copy clients ovpn files to ~/vpn-clients
-ssh test-ca "sudo rm -rf ~/vpn-clients; sudo mkdir -p ~/vpn-clients; sudo find /opt/ca/clients -type f -name *.ovpn -exec sudo cp {} ~/vpn-clients \;; sudo chown -R smailik:smailik ~/vpn-clients"
+ssh test-ca "sudo rm -rf ~/vpn-clients; sudo mkdir -p ~/vpn-clients; sudo find $CA_DIR/clients -type f -name *.ovpn -exec sudo cp {} ~/vpn-clients \;; sudo chown -R smailik:smailik ~/vpn-clients"
 
 scp -r test-ca:~/vpn-clients ~
+
+exit 0

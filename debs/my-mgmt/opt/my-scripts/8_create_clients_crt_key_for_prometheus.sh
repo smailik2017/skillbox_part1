@@ -48,3 +48,5 @@ ssh test-mon "sudo rm -rf ~/tmp"
 # restart nginx and prometheus on test-mon
 ssh test-mon "sudo systemctl restart nginx"
 ssh test-mon "sudo systemctl restart prometheus"
+
+exit 0

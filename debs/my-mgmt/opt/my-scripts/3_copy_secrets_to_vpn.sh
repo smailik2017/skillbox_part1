@@ -1,4 +1,5 @@
 #!/bin/bash
+# shellcheck disable=SC2029
 ##
 #
 # Script copy all needed for working VPN server.
@@ -34,3 +35,5 @@ ssh test-vpn "sudo chown -R root:openvpn /etc/openvpn; sudo chmod -R 640 /etc/op
 
 # restart openvpn@server
 ssh test-vpn "sudo systemctl restart openvpn@server"
+
+exit 0

@@ -7,4 +7,6 @@
 
 ssh-keygen -t ed25519 -C "smailik@example.com" -f ~/.ssh/timeweb
 
-cd -
+cd - || exit 1
+
+exit 0

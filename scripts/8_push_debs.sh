@@ -8,7 +8,7 @@
 #
 ##
 
-cd "$(dirname "$0")"/debs-install/
+cd "$(dirname "$0")"/debs-install/ || exit 1
 
 if ! ./1_inst_mgmt.sh
 then
@@ -45,6 +45,6 @@ then
   exit 1
 fi
 
-cd -
+cd - || exit 1
 
 exit 0

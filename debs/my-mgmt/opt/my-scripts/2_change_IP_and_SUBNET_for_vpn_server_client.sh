@@ -1,4 +1,5 @@
 #!/bin/bash
+# shellcheck disable=SC2029
 ##
 #
 # Script sets IP for VPN and INTERNAL_SUBNET in template for creating ovpn files

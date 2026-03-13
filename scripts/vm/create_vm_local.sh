@@ -22,7 +22,7 @@ function show_help {
 }
 
 # check params
-while [ ! -z $1 ]
+while [ -n "$1" ]
 do
   case $1 in 
     "--vm-name")
@@ -52,7 +52,7 @@ do
 done
 
 # Не установлено название виртуальной машины
-if [ -z $VM_NAME ] 
+if [ -z "$VM_NAME" ] 
 then
   echo "VM_NAME not set !!!"
   show_help
@@ -60,7 +60,7 @@ then
 fi
 
 # Не указан файл настройки YAML
-if [ -z $VM_YAML ] 
+if [ -z "$VM_YAML" ] 
 then
   echo "VM_YAML not set !!!"
   show_help
@@ -68,14 +68,14 @@ then
 fi
 
 # Не указан public key
-if [ -z $VM_PUBLIC_KEY ] 
+if [ -z "$VM_PUBLIC_KEY" ] 
 then
   echo "VM_PUBLIC_KEY not set !!!"
   show_help
   exit 1
 fi
 
-sed "s|<public>|$(cat "$VM_PUBLIC_KEY")|g" "$VM_YAML" > ${VM_YAML%?????}
+sed "s|<public>|$(cat "$VM_PUBLIC_KEY")|g" "$VM_YAML" > "${VM_YAML%?????}"
 
 # creating VM
 echo "creating VM: $VM_NAME"
@@ -84,6 +84,8 @@ yc compute instance create \
   --hostname="$VM_NAME" \
   --zone=ru-central1-a \
   --create-boot-disk image-folder-id=standard-images,image-family=ubuntu-2404-lts,size=10G \
-  --metadata-from-file user-data=${VM_YAML%?????}
+  --metadata-from-file user-data="${VM_YAML%?????}"
 
-rm ${VM_YAML%?????}
+rm "${VM_YAML%?????}"
+
+exit 0

@@ -5,7 +5,7 @@
 #
 ##
 
-if [ -z $1 ] 
+if [ -z "$1" ] 
 then
   echo "Enter client name as parameter."
   echo "EXAMPLE: 4_revoke_client.sh client1"
@@ -21,8 +21,10 @@ then
   exit 1
 fi
 
-cd $CA_DIR
-./easyrsa --batch revoke $1
+cd $CA_DIR || exit 1
+./easyrsa --batch revoke "$1"
 
-rm ./clients/$1.ovpn
-rm ~/vpn-clients/$1.ovpn
+rm "./clients/$1.ovpn"
+rm "$HOME/vpn-clients/$1.ovpn"
+
+exit 0

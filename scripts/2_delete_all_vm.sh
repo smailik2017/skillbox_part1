@@ -6,23 +6,24 @@
 #
 ##
 
-cd "$(dirname "$0")"
+cd "$(dirname "$0")" || exit 1
 
 yc compute instance list | grep test | sed 's/|//g' | awk '{print($2)}' |
-while read vm_name
+while read -r vm_name
 do
-  if [ -z $vm_name ]
+  if [ -z "$vm_name" ]
   then
     echo "there is no VMs in cloud!"
-    exit 0
+    exit 1
   fi
-  ./vm/delete_vm.sh --vm-name $vm_name &
+  ./vm/delete_vm.sh --vm-name "$vm_name" &
 done
 
-wait
 echo "all VM deleted!"
 yc compute instance list
 
-./delhosts.sh
+./delhosts.sh || exit 1
 
-cd -
+cd - || exit 1
+
+exit 0

@@ -5,7 +5,7 @@
 #
 ##
 
-if [[ -z $1 || -z $2 ]]
+if [[ -z "$1" || -z "$2" ]]
 then
 	echo "you must specify username and password"
 	echo "EXAMPLE: 1_create_user_for_prometheus_web.sh user p@ssw0rd"
@@ -13,7 +13,7 @@ then
 fi
 
 # generate bcrypt password
-pass=$(htpasswd -nb -B -C 10 "" $2 | tr -d ':\n')
+pass=$(htpasswd -nb -B -C 10 "" "$2" | tr -d ':\n')
 
 # add config to web.yml
 sudo sed -i '/basic_auth_users/,$d' /etc/prometheus/web.yml
@@ -28,3 +28,5 @@ sudo sed -i "s/^.*password.*$/      password: '$2'/" /etc/prometheus/prometheus.
 # restart prometheus and prometheus alerter
 sudo systemctl restart prometheus
 sudo systemctl restart prometheus-alertmanager
+
+exit 0

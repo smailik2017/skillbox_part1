@@ -5,9 +5,9 @@
 #
 ##
 
-cd "$(dirname "$0")"
+cd "$(dirname "$0")" || exit 1
 
-hosts=$(cat /etc/hosts | grep test-mgmt | sed 's/|//g' | awk '{print($2)}')
+hosts=$(grep test-mgmt /etc/hosts | sed 's/|//g' | awk '{print($2)}')
 if [[ ! "$hosts" == *"mgmt"* ]]
 then
   echo "mgmt hosts not exists in your /etc/hosts"
@@ -15,8 +15,8 @@ then
   exit 1
 fi
 
-hosts=$(cat /etc/hosts | grep test | grep -v mgmt | sed 's/|//g' | awk '{print($2)}')
-if [ ! $(echo $hosts | wc -w) -eq 3 ]
+hosts=$(grep test /etc/hosts | grep -v mgmt | sed 's/|//g' | awk '{print($2)}')
+if [ ! "$(echo "$hosts" | wc -w)" -eq 3 ]
 then
   echo "there is not all hosts in your /etc/hosts"
   echo "check your virtual hosts in cloud and rerun 5_sethosts.sh"
@@ -34,14 +34,16 @@ ssh-keyscan -H $mgmt >> ~/.ssh/known_hosts
 
 ssh $mgmt "sudo rm ~/.ssh/known_hosts"
 
-echo $hosts |
-while read vm_name
+echo "$hosts" |
+while read -r vm_name
 do
-  while ! ssh $mgmt "ssh-keyscan -H $vm_name"
+  while ! ssh -n $mgmt "ssh-keyscan -H $vm_name"
   do
     sleep 100
   done
-  ssh $mgmt "ssh-keyscan -H $vm_name >> ~/.ssh/known_hosts"
+  ssh -n $mgmt "ssh-keyscan -H $vm_name >> ~/.ssh/known_hosts"
 done
 
-cd -
+cd - || exit 1
+
+exit 0

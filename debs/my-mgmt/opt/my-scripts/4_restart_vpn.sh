@@ -6,3 +6,5 @@
 ##
 
 ssh test-vpn "sudo systemctl restart openvpn@server"
+
+exit 0

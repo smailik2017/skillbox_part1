@@ -5,3 +5,5 @@
 
 /usr/share/prometheus/alertmanager/generate-ui.sh
 sudo systemctl restart prometheus-alertmanager
+
+exit 0

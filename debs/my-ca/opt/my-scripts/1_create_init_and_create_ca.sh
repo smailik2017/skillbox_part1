@@ -9,9 +9,11 @@ CA_DIR=/opt/ca
 
 make-cadir $CA_DIR
 mkdir -p $CA_DIR/clients
-cd $CA_DIR
+cd "$CA_DIR" || exit 1
 ./easyrsa --batch clean-all
 ./easyrsa --batch init-pki
 ./easyrsa --batch build-ca nopass
 ./easyrsa --batch gen-dh
 ./easyrsa --batch gen-crl
+
+exit 0

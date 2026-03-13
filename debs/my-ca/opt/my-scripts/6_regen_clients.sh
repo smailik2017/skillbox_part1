@@ -12,11 +12,13 @@ SCRIPTS=/opt/my-scripts
 sudo rm -rf ~/vpn-clients
 
 # regen all clients
-find /opt/ca/clients -type f -exec basename {} .ovpn \; |
-while read client
+find $CA_DIR/clients -type f -exec basename {} .ovpn \; |
+while read -r client
 do
-  $SCRIPTS/3_create_client.sh $client
+  $SCRIPTS/3_create_client.sh "$client"
 done
 
 # update CRL file
 $SCRIPTS/5_update_crl.sh
+
+exit 0

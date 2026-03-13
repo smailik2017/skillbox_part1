@@ -16,7 +16,7 @@ function show_help {
 }
 
 # check params
-while [ ! -z $1 ]
+while [ -n "$1" ]
 do
   case $1 in 
     "--vm-name")
@@ -36,7 +36,7 @@ do
 done
 
 # Не установлено название виртуальной машины
-if [ -z $VM_NAME ] 
+if [ -z "$VM_NAME" ] 
 then
   echo "VM_NAME not set !!!"
   show_help
@@ -46,3 +46,5 @@ fi
 echo "deleting VM: $VM_NAME"
 
 yc compute instance delete "$VM_NAME"
+
+exit 0
