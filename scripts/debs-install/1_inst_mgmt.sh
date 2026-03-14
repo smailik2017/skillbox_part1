@@ -5,11 +5,6 @@
 #
 ##
 
-# prepare SHH access
-scp ~/.ssh/timeweb test-mgmt-ext:~/.ssh
-ssh test-mgmt-ext "chmod 600 ~/.ssh/timeweb"
-scp ./scripts/config test-mgmt-ext:~/.ssh
-
 # start install
 cd "$(dirname "$0")" || exit 1
 

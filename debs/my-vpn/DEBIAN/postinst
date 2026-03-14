@@ -68,7 +68,7 @@ sudo iptables -A OUTPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
 sudo iptables -A INPUT -i lo -j ACCEPT
 
 # allow ssh from mgmt
-sudo iptables -A INPUT -p tcp -s $vm_mgmt --dport 22 -j ACCEPT
+sudo iptables -A INPUT -p tcp -s "$vm_mgmt" --dport 22 -j ACCEPT
 
 # allow vpn from anywhere
 sudo iptables -A INPUT -p udp --dport 1194 -j ACCEPT
@@ -77,10 +77,10 @@ sudo iptables -A INPUT -p udp --dport 1194 -j ACCEPT
 sudo iptables -A INPUT -p icmp --icmp-type echo-request -j ACCEPT
 
 # allow node-exporter (9100/tcp) from mon
-sudo iptables -A INPUT -p tcp -s $vm_mon --dport 9100 -j ACCEPT
+sudo iptables -A INPUT -p tcp -s "$vm_mon" --dport 9100 -j ACCEPT
 
 # allow prometheus openvpn-exporter (9976/tcp) from mon
-sudo iptables -A INPUT -p tcp -s $vm_mon --dport 9976 -j ACCEPT
+sudo iptables -A INPUT -p tcp -s "$vm_mon" --dport 9976 -j ACCEPT
 
 # set NAT for VPN
 sudo iptables -t nat -A POSTROUTING -s 10.8.0.0/24 -o eth0 -j MASQUERADE

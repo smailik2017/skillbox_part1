@@ -4,10 +4,24 @@
 # Script install and preconfigures packages on servers
 # Script starts from operator PC, 
 # from wich there is an access by SSH to mgmt server with name test-mgmg-ext
-# read README first !
 #
 ##
 
+# check connection to mgmt server
+rm -vf ~/.ssh/known_hosts
+while ! ssh-keyscan test-mgmt-ext >> ~/.ssh/known_hosts
+do
+  echo "INFO: Could not connect to mgmt server."
+  echo "INFO: Waiting ..."
+  sleep 100
+done
+
+# copy access keys to mgmt server
+scp ~/.ssh/timeweb test-mgmt-ext:~/.ssh
+ssh test-mgmt-ext "chmod 600 ~/.ssh/timeweb"
+scp ./scripts/config test-mgmt-ext:~/.ssh
+
+# install packages
 cd "$(dirname "$0")"/debs-install/ || exit 1
 
 if ! ./1_inst_mgmt.sh
